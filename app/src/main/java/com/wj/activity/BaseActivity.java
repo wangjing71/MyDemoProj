@@ -12,7 +12,8 @@ import com.gyf.barlibrary.ImmersionBar;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private ImmersionBar mImmersionBar;
+    protected ImmersionBar mImmersionBar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
