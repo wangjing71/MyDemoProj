@@ -1,4 +1,4 @@
-package activity;
+package com.wj.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
