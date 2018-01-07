@@ -7,10 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.wj.fragment.CategoryThreeFragment;
-import com.wj.fragment.HomeThreeFragment;
-import com.wj.fragment.MineThreeFragment;
-import com.wj.fragment.ServiceThreeFragment;
+import com.wj.fragment.XXXX1Fragment;
+import com.wj.fragment.HomeFragment;
+import com.wj.fragment.XXXX2Fragment;
+import com.wj.fragment.XXXX3Fragment;
 import com.wj.myproj.R;
 
 import java.util.ArrayList;
@@ -46,14 +46,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         mFragments = new ArrayList<>();
-        HomeThreeFragment homeThreeFragment = new HomeThreeFragment();
-        CategoryThreeFragment categoryThreeFragment = new CategoryThreeFragment();
-        ServiceThreeFragment serviceThreeFragment = new ServiceThreeFragment();
-        MineThreeFragment mineThreeFragment = new MineThreeFragment();
-        mFragments.add(homeThreeFragment);
-        mFragments.add(categoryThreeFragment);
-        mFragments.add(serviceThreeFragment);
-        mFragments.add(mineThreeFragment);
+        HomeFragment homeFragment = new HomeFragment();
+        XXXX1Fragment XXXX1Fragment = new XXXX1Fragment();
+        XXXX3Fragment XXXX3Fragment = new XXXX3Fragment();
+        XXXX2Fragment XXXX2Fragment = new XXXX2Fragment();
+        mFragments.add(homeFragment);
+        mFragments.add(XXXX1Fragment);
+        mFragments.add(XXXX3Fragment);
+        mFragments.add(XXXX2Fragment);
 
         mViewPager.setAdapter(new MyHomeViewPagerAdapter(getSupportFragmentManager()));
         mViewPager.setOffscreenPageLimit(3);

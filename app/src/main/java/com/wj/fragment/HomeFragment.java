@@ -32,7 +32,7 @@ import java.util.List;
  * Created by Administrator on 2018/1/6.
  */
 
-public class HomeThreeFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
     private Toolbar mToolbar;
     private RecyclerView mRv;
