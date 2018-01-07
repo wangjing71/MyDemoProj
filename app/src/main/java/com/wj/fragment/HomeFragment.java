@@ -68,11 +68,13 @@ public class HomeFragment extends Fragment {
             mItemList.add("item" + i);
         }
 
-        mImages.add("http://desk.zol.com.cn/showpic/1024x768_63850_14.html");
-        mImages.add("http://desk.zol.com.cn/showpic/1024x768_63850_14.html");
-        mImages.add("http://desk.zol.com.cn/showpic/1024x768_63850_14.html");
-        mImages.add("http://desk.zol.com.cn/showpic/1024x768_63850_14.html");
-
+        mImages.add("https://i0.hdslb.com/bfs/archive/0ba8778a85cd73a63eb370a94e7e3ac411af6a62.jpg");
+        mImages.add("https://i0.hdslb.com/bfs/archive/ee67e09c57283388b3189cbc00ed7f845b1b05f6.jpg@620w_220h.webp");
+        mImages.add("https://i0.hdslb.com/bfs/archive/21a158779754ad35e7834150b5fc226acb2fa2c6.jpg@620w_220h.webp");
+        mImages.add("https://i0.hdslb.com/bfs/bangumi/4076c659f1c6b8dba89f30ac8cbb5f3a79119a77.jpg_620x300.jpg");
+        mImages.add("https://i0.hdslb.com/bfs/bangumi/33e17831b61ff7b37bd91c0d7cc99864445254ed.jpg_620x300.jpg");
+        mImages.add("https://i0.hdslb.com/bfs/bangumi/aba3e44ce6fd97f06a10b7ffaa2a3edd1bc186a3.jpg_620x300.jpg");
+        mImages.add("https://i0.hdslb.com/bfs/bangumi/41a0132df9c4cb028fd33669717a99488c88ee24.jpg_620x300.jpg");
 
         refreshLayout.setEnableLoadmore(false);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
