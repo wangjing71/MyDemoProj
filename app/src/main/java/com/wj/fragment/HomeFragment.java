@@ -3,6 +3,7 @@ package com.wj.fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ import com.youth.banner.Banner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * Created by Administrator on 2018/1/6.
@@ -58,6 +61,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout scane;
     private final int  CAMERA_CODE= 2;
     private static final int REQUEST_CODE_SCAN = 0x0000;
+    private static final String DECODED_CONTENT_KEY = "codedContent";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -231,6 +235,20 @@ public class HomeFragment extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE_SCAN);
             } else {
                 Toast.makeText(getContext(), "拒绝了权限申请", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 扫描二维码/条码回传
+        if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
+            if (data != null) {
+
+                String content = data.getStringExtra(DECODED_CONTENT_KEY);
+                Toast.makeText(getContext(), content, Toast.LENGTH_SHORT).show();
+
             }
         }
     }
