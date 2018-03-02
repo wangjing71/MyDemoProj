@@ -1,5 +1,6 @@
 package com.wj.fragment;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -23,6 +24,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.wj.adapter.OneAdapter;
 import com.wj.library.zxing.android.CaptureActivity;
 import com.wj.myproj.R;
@@ -31,6 +33,8 @@ import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observer;
 
 /**
  * Created by Administrator on 2018/1/6.
@@ -102,6 +106,27 @@ public class HomeFragment extends Fragment {
         scane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                RxPermissions rxPermissions = new RxPermissions(getActivity());
+                rxPermissions
+                        .request(Manifest.permission.CAMERA)
+                        .subscribe(new Observer<Boolean>() {
+                            @Override
+                            public void onNext(Boolean aBoolean) {
+                                Toast.makeText(getContext(), "onNext", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCompleted() {
+                                Intent intent = new Intent(getContext(),
+                                        CaptureActivity.class);
+                                startActivityForResult(intent, REQUEST_CODE_SCAN);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Toast.makeText(getContext(), "onError", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 Intent intent = new Intent(getContext(),
                         CaptureActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_SCAN);
