@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.barlibrary.ImmersionBar;
@@ -43,6 +45,7 @@ public class HomeFragment extends Fragment {
     private View headView;
     private int bannerHeight;
     private OneAdapter mOneAdapter;
+    private LinearLayout scane;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -60,6 +63,7 @@ public class HomeFragment extends Fragment {
         mToolbar = view.findViewById(R.id.toolbar);
         mRv = view.findViewById(R.id.rv);
         refreshLayout = view.findViewById(R.id.refreshLayout);
+        scane = mToolbar.findViewById(R.id.scane);
 
     }
 
@@ -91,6 +95,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void setEvents() {
+        scane.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "aaaaaaaaaaa", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         mRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
 
