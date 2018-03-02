@@ -30,8 +30,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.google.zxing.ResultPoint;
-import com.yzq.testzxing.R;
-import com.yzq.testzxing.zxing.camera.CameraManager;
+import com.wj.library.zxing.camera.CameraManager;
+import com.wj.myproj.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +86,7 @@ public final class ViewfinderView extends View {
         possibleResultPoints = new ArrayList<ResultPoint>(5);
         lastPossibleResultPoints = null;
         scanLight = BitmapFactory.decodeResource(resources,
-                R.drawable.scan_light);
+                R.mipmap.scan_light);
     }
 
     public void setCameraManager(CameraManager cameraManager) {

@@ -33,10 +33,10 @@ import android.util.Log;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
-import com.yzq.testzxing.R;
-import com.yzq.testzxing.zxing.camera.CameraManager;
-import com.yzq.testzxing.zxing.decode.DecodeThread;
-import com.yzq.testzxing.zxing.view.ViewfinderResultPointCallback;
+import com.wj.library.zxing.camera.CameraManager;
+import com.wj.library.zxing.decode.DecodeThread;
+import com.wj.library.zxing.view.ViewfinderResultPointCallback;
+import com.wj.myproj.R;
 
 import java.util.Collection;
 import java.util.Map;

@@ -20,7 +20,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.google.zxing.BarcodeFormat;
-import com.yzq.testzxing.zxing.android.Intents;
+import com.wj.library.zxing.android.Intents;
 
 import java.util.Arrays;
 import java.util.EnumSet;

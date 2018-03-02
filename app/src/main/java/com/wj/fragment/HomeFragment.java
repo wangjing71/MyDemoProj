@@ -1,5 +1,6 @@
 package com.wj.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.wj.adapter.OneAdapter;
+import com.wj.library.zxing.android.CaptureActivity;
 import com.wj.myproj.R;
 import com.wj.utils.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -46,6 +48,8 @@ public class HomeFragment extends Fragment {
     private int bannerHeight;
     private OneAdapter mOneAdapter;
     private LinearLayout scane;
+
+    private static final int REQUEST_CODE_SCAN = 0x0000;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -98,7 +102,9 @@ public class HomeFragment extends Fragment {
         scane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "aaaaaaaaaaa", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(),
+                        CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_SCAN);
             }
         });
 

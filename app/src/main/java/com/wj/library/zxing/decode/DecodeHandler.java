@@ -30,8 +30,8 @@ import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
-import com.yzq.testzxing.R;
-import com.yzq.testzxing.zxing.android.CaptureActivity;
+import com.wj.library.zxing.android.CaptureActivity;
+import com.wj.myproj.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Map;

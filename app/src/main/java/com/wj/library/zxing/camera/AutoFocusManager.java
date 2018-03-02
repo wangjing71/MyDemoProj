@@ -24,7 +24,8 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.yzq.testzxing.zxing.android.PreferencesActivity;
+
+import com.wj.library.zxing.android.PreferencesActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;

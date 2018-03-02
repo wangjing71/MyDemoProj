@@ -19,9 +19,9 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
-import com.yzq.testzxing.R;
-import com.yzq.testzxing.zxing.camera.CameraManager;
-import com.yzq.testzxing.zxing.view.ViewfinderView;
+import com.wj.library.zxing.camera.CameraManager;
+import com.wj.library.zxing.view.ViewfinderView;
+import com.wj.myproj.R;
 
 import java.io.IOException;
 import java.util.Collection;

@@ -26,7 +26,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.yzq.testzxing.zxing.android.PreferencesActivity;
+import com.wj.library.zxing.android.PreferencesActivity;
 
 import java.lang.reflect.Method;
 

@@ -26,7 +26,8 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.yzq.testzxing.R;
+
+import com.wj.myproj.R;
 
 import java.io.Closeable;
 import java.io.IOException;

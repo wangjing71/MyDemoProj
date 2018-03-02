@@ -25,8 +25,8 @@ import android.util.Log;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
-import com.yzq.testzxing.zxing.android.CaptureActivity;
-import com.yzq.testzxing.zxing.android.PreferencesActivity;
+import com.wj.library.zxing.android.CaptureActivity;
+import com.wj.library.zxing.android.PreferencesActivity;
 
 import java.util.Collection;
 import java.util.EnumMap;
