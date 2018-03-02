@@ -45,5 +45,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     //RecyclerView框架
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.18'
-
+    implementation files('libs/core-3.0.0.jar')
 }
