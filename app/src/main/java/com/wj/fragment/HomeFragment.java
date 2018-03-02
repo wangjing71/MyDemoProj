@@ -2,18 +2,22 @@ package com.wj.fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +28,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.wj.activity.MainActivity;
 import com.wj.adapter.OneAdapter;
 import com.wj.library.zxing.android.CaptureActivity;
 import com.wj.myproj.R;
@@ -34,7 +38,6 @@ import com.youth.banner.Banner;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observer;
 
 /**
  * Created by Administrator on 2018/1/6.
@@ -42,6 +45,7 @@ import rx.Observer;
 
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
     private Toolbar mToolbar;
     private RecyclerView mRv;
     private TwinklingRefreshLayout refreshLayout;
@@ -52,7 +56,7 @@ public class HomeFragment extends Fragment {
     private int bannerHeight;
     private OneAdapter mOneAdapter;
     private LinearLayout scane;
-
+    private final int  CAMERA_CODE= 2;
     private static final int REQUEST_CODE_SCAN = 0x0000;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -106,30 +110,20 @@ public class HomeFragment extends Fragment {
         scane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RxPermissions rxPermissions = new RxPermissions(getActivity());
-                rxPermissions
-                        .request(Manifest.permission.CAMERA)
-                        .subscribe(new Observer<Boolean>() {
-                            @Override
-                            public void onNext(Boolean aBoolean) {
-                                Toast.makeText(getContext(), "onNext", Toast.LENGTH_SHORT).show();
-                            }
 
-                            @Override
-                            public void onCompleted() {
-                                Intent intent = new Intent(getContext(),
-                                        CaptureActivity.class);
-                                startActivityForResult(intent, REQUEST_CODE_SCAN);
-                            }
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    Log.i("====", "申请权限");
+                    HomeFragment.this.requestPermissions(new String[]{Manifest.permission.CAMERA},
+                            CAMERA_CODE);
+                } else {
+                    Log.i("====", "权限存在");
+                    Intent intent = new Intent(getContext(),
+                            CaptureActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_SCAN);
+                }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Toast.makeText(getContext(), "onError", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                Intent intent = new Intent(getContext(),
-                        CaptureActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_SCAN);
+
             }
         });
 
@@ -225,5 +219,19 @@ public class HomeFragment extends Fragment {
             data.add("item" + i);
         }
         return data;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(getContext(),
+                        CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_SCAN);
+            } else {
+                Toast.makeText(getContext(), "拒绝了权限申请", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
