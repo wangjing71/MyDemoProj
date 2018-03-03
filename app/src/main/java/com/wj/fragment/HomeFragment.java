@@ -32,11 +32,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.wj.activity.MainActivity;
 import com.wj.adapter.OneAdapter;
 import com.wj.library.zxing.android.CaptureActivity;
 import com.wj.myproj.R;
 import com.wj.utils.GlideImageLoader;
+import com.wj.utils.Urlutils;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -67,6 +71,7 @@ public class HomeFragment extends Fragment {
     private final int CAMERA_CODE = 2;
     private static final int REQUEST_CODE_SCAN = 0x0000;
     private static final String DECODED_CONTENT_KEY = "codedContent";
+    private ArrayList<String> imageslist = new ArrayList<String>();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
@@ -91,6 +96,21 @@ public class HomeFragment extends Fragment {
 
     private void initData() {
         for (int i = 1; i <= 20; i++) {
+
+            OkGo.<String>get(Urlutils.IMAGE_URL)
+                    .tag(this)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            Log.i("=====",response.body());
+                        }
+
+                        @Override
+                        public void onError(Response<String> response) {
+                        }
+                    });
+
+
             mItemList.add("item" + i);
         }
 
