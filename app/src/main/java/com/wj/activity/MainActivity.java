@@ -6,18 +6,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.wj.fragment.XXXX1Fragment;
 import com.wj.fragment.HomeFragment;
 import com.wj.fragment.XXXX2Fragment;
 import com.wj.fragment.XXXX3Fragment;
 import com.wj.myproj.R;
+import com.wj.utils.KeyboardUtil;
 
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
 
     private ViewPager mViewPager;
+    private LinearLayout ll;
     private LinearLayout ll_home;
     private LinearLayout ll_category;
     private LinearLayout ll_service;
@@ -34,6 +37,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         mViewPager = findViewById(R.id.viewPager);
+        ll = findViewById(R.id.ll);
         ll_home = findViewById(R.id.ll_home);
         ll_category = findViewById(R.id.ll_category);
         ll_service = findViewById(R.id.ll_service);
@@ -62,6 +66,19 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void setEvent() {
+
+        KeyboardUtil.getInstance().setListener(this, new KeyboardUtil.OnKeyboardListener() {
+            @Override
+            public void onKeyboardShow(int i) {
+                ll.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onKeyboardHide(int i) {
+                ll.setVisibility(View.VISIBLE);
+            }
+        });
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
