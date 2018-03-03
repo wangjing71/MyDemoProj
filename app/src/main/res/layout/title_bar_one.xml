@@ -40,6 +40,9 @@
         </LinearLayout>
 
         <EditText
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:id="@+id/input_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"

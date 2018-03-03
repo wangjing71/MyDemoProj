@@ -19,9 +19,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
@@ -52,6 +56,7 @@ public class HomeFragment extends Fragment {
     private Toolbar mToolbar;
     private RecyclerView mRv;
     private TwinklingRefreshLayout refreshLayout;
+    private EditText inputSearch;
     private View view;
     private List<String> mImages = new ArrayList<>();
     private List<String> mItemList = new ArrayList<>();
@@ -59,7 +64,7 @@ public class HomeFragment extends Fragment {
     private int bannerHeight;
     private OneAdapter mOneAdapter;
     private LinearLayout scane;
-    private final int  CAMERA_CODE= 2;
+    private final int CAMERA_CODE = 2;
     private static final int REQUEST_CODE_SCAN = 0x0000;
     private static final String DECODED_CONTENT_KEY = "codedContent";
 
@@ -80,6 +85,7 @@ public class HomeFragment extends Fragment {
         mRv = view.findViewById(R.id.rv);
         refreshLayout = view.findViewById(R.id.refreshLayout);
         scane = mToolbar.findViewById(R.id.scane);
+        inputSearch = mToolbar.findViewById(R.id.input_search);
 
     }
 
@@ -131,6 +137,24 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        inputSearch.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    // 先隐藏键盘
+                    ((InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(getActivity().getCurrentFocus()
+                                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
+                    Toast.makeText(getContext(), "搜索中", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
+
         mRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
 
@@ -144,7 +168,7 @@ public class HomeFragment extends Fragment {
                             , ContextCompat.getColor(getActivity(), R.color.colorPrimary), alpha));
                 } else {
                     mToolbar.setBackgroundColor(ColorUtils.blendARGB(Color.TRANSPARENT
-                            , ContextCompat.getColor(getActivity() , R.color.colorPrimary), 1));
+                            , ContextCompat.getColor(getActivity(), R.color.colorPrimary), 1));
                 }
             }
         });
