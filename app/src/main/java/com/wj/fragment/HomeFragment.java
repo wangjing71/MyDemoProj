@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -107,9 +108,8 @@ public class HomeFragment extends Fragment {
         mImages.add("https://i0.hdslb.com/bfs/bangumi/41a0132df9c4cb028fd33669717a99488c88ee24.jpg_620x300.jpg");
 
         refreshLayout.setEnableLoadmore(false);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.VERTICAL, false);
-        mRv.setLayoutManager(linearLayoutManager);
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        mRv.setLayoutManager(manager);
         mOneAdapter = new OneAdapter(getContext());
         mOneAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         mRv.setAdapter(mOneAdapter);
@@ -121,8 +121,8 @@ public class HomeFragment extends Fragment {
                 .tag(this)
                 .params("showapi_appid","58033")
                 .params("showapi_sign","7f55bbebbcf241dca9dd2558ac7ba680")
-                .params("num","20")
-                .params("page","1")
+                .params("num","40")
+                .params("page","2")
                 .params("rand","0")
                 .execute(new StringCallback() {
                     @Override
@@ -258,15 +258,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
-
-    private List<String> newData() {
-        List<String> data = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
-            data.add("item" + i);
-        }
-        return data;
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
