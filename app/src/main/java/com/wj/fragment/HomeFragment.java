@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -37,6 +38,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.wj.activity.MainActivity;
 import com.wj.adapter.OneAdapter;
+import com.wj.bean.BeautyImage;
 import com.wj.library.zxing.android.CaptureActivity;
 import com.wj.myproj.R;
 import com.wj.utils.GlideImageLoader;
@@ -63,7 +65,6 @@ public class HomeFragment extends Fragment {
     private EditText inputSearch;
     private View view;
     private List<String> mImages = new ArrayList<>();
-    private List<String> mItemList = new ArrayList<>();
     private View headView;
     private int bannerHeight;
     private OneAdapter mOneAdapter;
@@ -96,28 +97,7 @@ public class HomeFragment extends Fragment {
 
     private void initData() {
 
-        OkGo.<String>post("http://route.showapi.com/197-1")
-                .tag(this)
-                .params("showapi_appid","58033")
-                .params("showapi_sign","7f55bbebbcf241dca9dd2558ac7ba680")
-                .params("num","20")
-                .params("page","1")
-                .params("rand","1")
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        Log.i("=====",response.body());
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                    }
-                });
-
-
-        for (int i = 1; i <= 5; i++) {
-            mItemList.add("item" + i);
-        }
+        initFirstData();
 
         mImages.add("https://i0.hdslb.com/bfs/archive/ee67e09c57283388b3189cbc00ed7f845b1b05f6.jpg@620w_220h.webp");
         mImages.add("https://i0.hdslb.com/bfs/archive/21a158779754ad35e7834150b5fc226acb2fa2c6.jpg@620w_220h.webp");
@@ -130,13 +110,39 @@ public class HomeFragment extends Fragment {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         mRv.setLayoutManager(linearLayoutManager);
-        mOneAdapter = new OneAdapter();
+        mOneAdapter = new OneAdapter(getContext());
         mOneAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         mRv.setAdapter(mOneAdapter);
         addHeaderView();
-        mOneAdapter.setPreLoadNumber(1);
-        mOneAdapter.setNewData(mItemList);
+    }
 
+    private void initFirstData() {
+        OkGo.<String>post("http://route.showapi.com/197-1")
+                .tag(this)
+                .params("showapi_appid","58033")
+                .params("showapi_sign","7f55bbebbcf241dca9dd2558ac7ba680")
+                .params("num","20")
+                .params("page","1")
+                .params("rand","0")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.i("=====",response.body());
+                        imageslist.clear();
+                        Gson gson = new Gson();
+                        BeautyImage beautyImage = gson.fromJson(response.body(),BeautyImage.class);
+                        for(int i = 0;i<beautyImage.getShowapi_res_body().getNewslist().size();i++){
+                            imageslist.add(beautyImage.getShowapi_res_body().getNewslist().get(i).getPicUrl());
+                        }
+                        mOneAdapter.setPreLoadNumber(1);
+                        mOneAdapter.setNewData(imageslist);
+                        refreshLayout.finishRefreshing();
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                    }
+                });
 
     }
 
@@ -206,11 +212,11 @@ public class HomeFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mOneAdapter.addData(addData());
-                        if (mItemList.size() == 100) {
-                            mOneAdapter.loadMoreEnd();
-                        } else
-                            mOneAdapter.loadMoreComplete();
+//                        mOneAdapter.addData(addData());
+//                        if (mItemList.size() == 100) {
+//                            mOneAdapter.loadMoreEnd();
+//                        } else
+//                            mOneAdapter.loadMoreComplete();
                     }
                 }, 2000);
             }
@@ -218,16 +224,7 @@ public class HomeFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mItemList.clear();
-                        mItemList.addAll(newData());
-                        mOneAdapter.setNewData(mItemList);
-                        refreshLayout.finishRefreshing();
-                        mToolbar.setVisibility(View.VISIBLE);
-                    }
-                }, 2000);
+                initFirstData();
             }
 
             @Override
@@ -261,13 +258,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private List<String> addData() {
-        List<String> data = new ArrayList<>();
-        for (int i = mItemList.size() + 1; i <= mItemList.size() + 20; i++) {
-            data.add("item" + i);
-        }
-        return data;
-    }
+
 
     private List<String> newData() {
         List<String> data = new ArrayList<>();

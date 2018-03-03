@@ -47,4 +47,5 @@ dependencies {
     //RecyclerView框架
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.18'
     implementation files('libs/core-3.0.0.jar')
+    compile 'com.google.code.gson:gson:2.8.2'
 }
