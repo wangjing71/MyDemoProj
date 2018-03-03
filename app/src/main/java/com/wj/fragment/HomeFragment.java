@@ -95,22 +95,27 @@ public class HomeFragment extends Fragment {
     }
 
     private void initData() {
-        for (int i = 1; i <= 20; i++) {
 
-            OkGo.<String>get(Urlutils.IMAGE_URL)
-                    .tag(this)
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onSuccess(Response<String> response) {
-                            Log.i("=====",response.body());
-                        }
+        OkGo.<String>post("http://route.showapi.com/197-1")
+                .tag(this)
+                .params("showapi_appid","58033")
+                .params("showapi_sign","7f55bbebbcf241dca9dd2558ac7ba680")
+                .params("num","20")
+                .params("page","1")
+                .params("rand","1")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Log.i("=====",response.body());
+                    }
 
-                        @Override
-                        public void onError(Response<String> response) {
-                        }
-                    });
+                    @Override
+                    public void onError(Response<String> response) {
+                    }
+                });
 
 
+        for (int i = 1; i <= 5; i++) {
             mItemList.add("item" + i);
         }
 
