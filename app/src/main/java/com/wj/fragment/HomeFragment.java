@@ -162,10 +162,14 @@ public class HomeFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 totalDy += dy;
                 if (totalDy <= bannerHeight) {
+                    Log.i("=========","11111111");
+                    mToolbar.setVisibility(View.VISIBLE);
                     float alpha = (float) totalDy / bannerHeight;
                     mToolbar.setBackgroundColor(ColorUtils.blendARGB(Color.TRANSPARENT
                             , ContextCompat.getColor(getActivity(), R.color.colorPrimary), alpha));
                 } else {
+                    mToolbar.setVisibility(View.GONE);
+                    Log.i("=========","2222222");
                     mToolbar.setBackgroundColor(ColorUtils.blendARGB(Color.TRANSPARENT
                             , ContextCompat.getColor(getActivity(), R.color.colorPrimary), 1));
                 }
