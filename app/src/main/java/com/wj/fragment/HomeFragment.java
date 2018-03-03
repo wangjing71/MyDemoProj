@@ -94,7 +94,6 @@ public class HomeFragment extends Fragment {
             mItemList.add("item" + i);
         }
 
-        mImages.add("https://i0.hdslb.com/bfs/archive/0ba8778a85cd73a63eb370a94e7e3ac411af6a62.jpg");
         mImages.add("https://i0.hdslb.com/bfs/archive/ee67e09c57283388b3189cbc00ed7f845b1b05f6.jpg@620w_220h.webp");
         mImages.add("https://i0.hdslb.com/bfs/archive/21a158779754ad35e7834150b5fc226acb2fa2c6.jpg@620w_220h.webp");
         mImages.add("https://i0.hdslb.com/bfs/bangumi/4076c659f1c6b8dba89f30ac8cbb5f3a79119a77.jpg_620x300.jpg");
