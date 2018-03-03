@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -37,6 +38,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.wj.activity.MainActivity;
 import com.wj.adapter.OneAdapter;
+import com.wj.bean.BeautyImage;
 import com.wj.library.zxing.android.CaptureActivity;
 import com.wj.myproj.R;
 import com.wj.utils.GlideImageLoader;
@@ -96,25 +98,7 @@ public class HomeFragment extends Fragment {
 
     private void initData() {
 
-        OkGo.<String>post("http://route.showapi.com/197-1")
-                .tag(this)
-                .params("showapi_appid","58033")
-                .params("showapi_sign","7f55bbebbcf241dca9dd2558ac7ba680")
-                .params("num","20")
-                .params("page","1")
-                .params("rand","1")
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        Log.i("=====",response.body());
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                    }
-                });
-
-
+        initFirstData();
         for (int i = 1; i <= 5; i++) {
             mItemList.add("item" + i);
         }
@@ -138,6 +122,34 @@ public class HomeFragment extends Fragment {
         mOneAdapter.setNewData(mItemList);
 
 
+    }
+
+    private void initFirstData() {
+        OkGo.<String>post("http://route.showapi.com/197-1")
+                .tag(this)
+                .params("showapi_appid","58033")
+                .params("showapi_sign","7f55bbebbcf241dca9dd2558ac7ba680")
+                .params("num","20")
+                .params("page","1")
+                .params("rand","1")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        imageslist.clear();
+                        Gson gson = new Gson();
+                        BeautyImage beautyImage = gson.fromJson(response.body(),BeautyImage.class);
+                        for(int i = 0;i<beautyImage.getShowapi_res_body().getNewslist().size();i++){
+                            imageslist.add(beautyImage.getShowapi_res_body().getNewslist().get(i).getPicUrl());
+                        }
+                        for(int i = 0;i<imageslist.size();i++){
+                            Log.i("===",imageslist.get(i));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                    }
+                });
     }
 
     private void setEvents() {
@@ -226,6 +238,7 @@ public class HomeFragment extends Fragment {
                         mOneAdapter.setNewData(mItemList);
                         refreshLayout.finishRefreshing();
                         mToolbar.setVisibility(View.VISIBLE);
+                        initFirstData();
                     }
                 }, 2000);
             }
